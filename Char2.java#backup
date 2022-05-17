@@ -1,0 +1,130 @@
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
+/**
+ * Write a description of class Char here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class Char2 extends Actor
+{
+    /**
+     * Act - do whatever the Char wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
+    public static int mass2 = 20;
+    public int score2 = 0;
+    public static GreenfootImage image2 = new GreenfootImage("dino.png");
+    private int sizer2 = 4;
+    public int pellets2 = 0;
+    int mass = Char.mass1;
+    
+    public Char2()
+    {
+        score2 = 0;
+        pellets2 = 0;
+        mass2 = 20;
+    }
+    public void act() 
+    {
+        controls();
+        touchPellet();
+        mass();
+        mass2();
+        touchChar();
+        getWorld().showText("Mass (Player 2): " + mass2, 100, 300);
+        
+    }
+    public void controls()
+    {
+        if (Greenfoot.isKeyDown("a"))
+      {
+          Greenfoot.setSpeed(50);
+          move(-10);
+       
+      }
+      
+      else if (Greenfoot.isKeyDown("d"))
+      {
+          Greenfoot.setSpeed(50);
+          move(10);
+       
+      }
+      
+      else if (Greenfoot.isKeyDown("w"))
+      {
+       turn(-90);
+       Greenfoot.setSpeed(50);
+       move(10);
+       turn(90);
+       
+      }
+      else if(Greenfoot.isKeyDown("s"))
+      {
+        turn(-90);
+        Greenfoot.setSpeed(50);
+        move(-10);
+        turn(90);
+      }
+    }
+    public void touchPellet()
+    {
+        if(isTouching(Pellets.class))
+        {
+            score2 = score2 + 1;
+            mass2 = mass2 + 1;
+            removeTouching(Pellets.class);
+            pellets2 = pellets2 + 1;
+        for (int i = 0; i < 1; i++)
+        {
+            getWorld().addObject(new Pellets(), Greenfoot.getRandomNumber(990), Greenfoot.getRandomNumber(690));
+        }
+        }
+    }
+    public void mass()
+    {
+             
+             if(pellets2 == 70)
+             {
+               image2.scale(image2.getWidth()*(1+(sizer2))/4, image2.getHeight()*(1+sizer2)/4);
+               setImage(image2);
+               Greenfoot.setSpeed(30);
+             }
+    }
+    public void mass2()
+    {
+             
+             if(pellets2 == 150)
+             {
+               image2.scale(image2.getWidth()*(1+(sizer2))/4, image2.getHeight()*(1+sizer2)/4);
+               setImage(image2);
+               //sizer++;
+             }
+    }
+    public void touchChar()
+    {
+        if(isTouching(Char2.class))
+        {
+           if((mass2 > mass) == true)
+           {
+               removeTouching(Char.class);
+               mass2 = mass2 + mass;
+               image2.scale(image2.getWidth()*(1+(sizer2))/4, image2.getHeight()*(1+sizer2)/4);
+               setImage(image2);
+               Player1Lose b = new Player1Lose();
+               Greenfoot.delay(100);
+               Greenfoot.setWorld(b);
+           } 
+        }
+    }
+        public void touchStart()
+    {
+        if (Greenfoot.mouseClicked(Start.class) == true) {
+            game a = new game();
+            Greenfoot.setWorld(a);
+            mass2 = 20;
+            sizer2 = 4;
+        }
+    }
+}
+    
